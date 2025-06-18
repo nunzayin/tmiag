@@ -7,6 +7,10 @@ ANSWER_NO_ALIAS = ("no", "n", "нет", "не", "н")
 RAND_ELEMS_RANGE = (-100, 100)
 RAND_GEN_TIMES = 5
 PREDICATE = lambda a, b: not a % b == 0
+CONSOLE_COLOR_GREEN = "\x1b[1;32;40m"
+CONSOLE_COLOR_RED = "\x1b[1;31;40m"
+CONSOLE_COLOR_RESET = "\x1b[0m"
+USE_COLORS = True
 
 def ask(prompt, isYesDefault=True):
     while True:
@@ -49,13 +53,22 @@ def predicate_sqr(s, P):
 def print_square(s, ps):
     for i in range(len(s)):
         for j in range(len(s[i])):
-            print(
-                "{:4d},{:4d} [{}]".format(
-                    s[i][j][0],
-                    s[i][j][1],
-                    "T" if ps[i][j] else "F"),
-                end = "")
-        print()
+            if USE_COLORS:
+                print(
+                    "| {}{:4d},{:4d}{} ".format(
+                        CONSOLE_COLOR_GREEN if ps[i][j] else CONSOLE_COLOR_RED,
+                        s[i][j][0],
+                        s[i][j][1],
+                        CONSOLE_COLOR_RESET),
+                    end = "")
+            else:
+                print(
+                    "| {:4d},{:4d} [{}] ".format(
+                        s[i][j][0],
+                        s[i][j][1],
+                        "T" if ps[i][j] else "F"),
+                    end = "")
+        print("|")
 
 def main():
     A = set()
@@ -70,6 +83,9 @@ def main():
     A_sqr = descartes_sqr(list(A))
     P_sqr = predicate_sqr(A_sqr, PREDICATE)
 
+    print("Декартов квадрат{}:".format(
+        " (T - составляет отношение, F - не составляет)" if not USE_COLORS else ""
+        ))
     print_square(A_sqr, P_sqr)
 
 if __name__ == "__main__":
