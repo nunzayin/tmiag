@@ -39,6 +39,19 @@ def input_set():
             print(f"Ошибка ввода: {e}")
     return res
 
+def descartes_sqr(s):
+    return [[(s[i], s[j]) for j in range(len(s))] for i in range(len(s))]
+
+def print_square(s):
+    for i in range(len(s)):
+        for j in range(len(s[i])):
+            print(
+                "{:4d}, {:4d}, [N]".format(
+                    s[i][j][0],
+                    s[i][j][1]),
+                end = "")
+        print()
+
 def main():
     A = set()
     if ask("Сгенерировать значения автоматически?"):
@@ -46,6 +59,8 @@ def main():
     else:
         A = input_set()
     print(A)
+    A_sqr = descartes_sqr(list(A))
+    print_square(A_sqr)
 
 if __name__ == "__main__":
     main()
