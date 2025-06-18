@@ -26,7 +26,7 @@ def generate_set():
     return {randint(*RAND_ELEMS_RANGE) for i in range(RAND_GEN_TIMES)}
 
 def input_set():
-    res = {}
+    res = set()
     print("Вводите целые числа через пробел или Enter (можно совмещать).")
     print("Введите \"!\", чтобы завершить ввод.")
     while True:
@@ -36,11 +36,11 @@ def input_set():
         try:
             res |= set(map(int, usr_input.split()))
         except Exception as e:
-            print("Ошибка ввода: {e}")
+            print(f"Ошибка ввода: {e}")
     return res
 
 def main():
-    A = {}
+    A = set()
     if ask("Сгенерировать значения автоматически?"):
         A = generate_set()
     else:
