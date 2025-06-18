@@ -42,15 +42,22 @@ def input_set():
 def descartes_sqr(s):
     return [[(s[i], s[j]) for j in range(len(s))] for i in range(len(s))]
 
-def print_square(s):
+def predicate_sqr(s, P):
+    return [[P(*s[i][j]) for j in range(len(s))] for i in range(len(s))]
+
+def print_square(s, ps):
     for i in range(len(s)):
         for j in range(len(s[i])):
             print(
-                "{:4d}, {:4d}, [N]".format(
+                "{:4d},{:4d} [{}]".format(
                     s[i][j][0],
-                    s[i][j][1]),
+                    s[i][j][1],
+                    "T" if ps[i][j] else "F"),
                 end = "")
         print()
+
+def P_v8(a, b):
+    return not a % b == 0
 
 def main():
     A = set()
@@ -60,7 +67,8 @@ def main():
         A = input_set()
     print(A)
     A_sqr = descartes_sqr(list(A))
-    print_square(A_sqr)
+    P_sqr = predicate_sqr(A_sqr, P_v8)
+    print_square(A_sqr, P_sqr)
 
 if __name__ == "__main__":
     main()
