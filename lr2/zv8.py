@@ -6,7 +6,8 @@ ANSWER_YES_ALIAS = ("yes", "y", "да", "д")
 ANSWER_NO_ALIAS = ("no", "n", "нет", "не", "н")
 RAND_ELEMS_RANGE = (-100, 100)
 RAND_GEN_TIMES = 5
-PREDICATE = lambda a, b: not a % b == 0
+RELATION = lambda a, b: not a % b == 0
+RELATION_DESC = "(Вариант 8) a R b = а не делится на b без остатка"
 CONSOLE_COLOR_GREEN = "\x1b[1;32;40m"
 CONSOLE_COLOR_RED = "\x1b[1;31;40m"
 CONSOLE_COLOR_RESET = "\x1b[0m"
@@ -47,8 +48,8 @@ def input_set():
 def descartes_sqr(s):
     return [[(s[i], s[j]) for j in range(len(s))] for i in range(len(s))]
 
-def predicate_sqr(s, P):
-    return [[P(*s[i][j]) for j in range(len(s))] for i in range(len(s))]
+def relation_sqr(s, R):
+    return [[R(*s[i][j]) for j in range(len(s))] for i in range(len(s))]
 
 def print_square(s, ps):
     for i in range(len(s)):
@@ -79,14 +80,15 @@ def main():
         A = input_set()
 
     print(f"Исходное мн-во:\n{A}")
+    print(f"Исследуемое отношение:\n{RELATION_DESC}")
 
     A_sqr = descartes_sqr(list(A))
-    P_sqr = predicate_sqr(A_sqr, PREDICATE)
+    R_sqr = relation_sqr(A_sqr, RELATION)
 
     print("Декартов квадрат{}:".format(
         " (T - составляет отношение, F - не составляет)" if not USE_COLORS else ""
         ))
-    print_square(A_sqr, P_sqr)
+    print_square(A_sqr, R_sqr)
 
 if __name__ == "__main__":
     main()
