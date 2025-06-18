@@ -5,7 +5,8 @@ from random import randint
 ANSWER_YES_ALIAS = ("yes", "y", "да", "д")
 ANSWER_NO_ALIAS = ("no", "n", "нет", "не", "н")
 RAND_ELEMS_RANGE = (-100, 100)
-RAND_GEN_TIMES = 10
+RAND_GEN_TIMES = 5
+PREDICATE = lambda a, b: not a % b == 0
 
 def ask(prompt, isYesDefault=True):
     while True:
@@ -56,18 +57,19 @@ def print_square(s, ps):
                 end = "")
         print()
 
-def P_v8(a, b):
-    return not a % b == 0
-
 def main():
     A = set()
+
     if ask("Сгенерировать значения автоматически?"):
         A = generate_set()
     else:
         A = input_set()
-    print(A)
+
+    print(f"Исходное мн-во:\n{A}")
+
     A_sqr = descartes_sqr(list(A))
-    P_sqr = predicate_sqr(A_sqr, P_v8)
+    P_sqr = predicate_sqr(A_sqr, PREDICATE)
+
     print_square(A_sqr, P_sqr)
 
 if __name__ == "__main__":
